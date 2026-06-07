@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from './PageHero.astro';
+import CTABand from './CTABand.astro';
+import ServiceIcon from './ServiceIcon.astro';
+import { site } from '../data/site';
+
+interface Crumb { label: string; href?: string; }
+interface Highlight { t: string; d: string; icon?: string; }
+interface Props {
+  seoTitle: string;
+  description: string;
+  path: string;
+  eyebrow: string;
+  title: string;
+  accent?: string;
+  lead: string;
+  crumbs: Crumb[];
+  intro: string[];
+  highlights?: Highlight[];
+  checklistHeading?: string;
+  checklist?: string[];
+  note?: string;
+  ctaHeading?: string;
+  ctaAccent?: string;
+  ctaSub?: string;
+  primaryCtaLabel?: string;
+}
+const {
+  seoTitle, description, path, eyebrow, title, accent, lead, crumbs,
+  intro, highlights = [], checklistHeading = "What we handle", checklist = [],
+  note, ctaHeading = 'Ready to', ctaAccent = 'get started?', ctaSub,
+  primaryCtaLabel = 'Book online',
+} = Astro.props;
+---
+<Layout title={seoTitle} description={description} path={path}>
+  <PageHero eyebrow={eyebrow} title={title} accent={accent} lead={lead} crumbs={crumbs}>
+    <div class="mt-8 flex flex-col sm:flex-row gap-3 reveal">
+      <a href={site.booking} target="_blank" rel="noopener" class="btn btn-primary" data-magnetic data-ripple>{primaryCtaLabel}</a>
+      <a href={`tel:${site.phoneHref}`} class="btn btn-outline">Call {site.phoneDisplay}</a>
+    </div>
+  </PageHero>
+
+  <section class="bg-ivory section">
+    <div class="container-page grid lg:grid-cols-12 gap-10 lg:gap-16">
+      <div class="lg:col-span-7 space-y-5 text-lg text-charcoal/80 leading-relaxed">
+        {intro.map((p) => <p class="reveal">{p}</p>)}
+        <slot />
+      </div>
+      {checklist.length > 0 && (
+        <aside class="lg:col-span-5">
+          <div class="card p-7 sticky top-28 reveal">
+            <h2 class="font-display font-bold text-xl text-forest mb-4">{checklistHeading}</h2>
+            <ul class="space-y-2.5">
+              {checklist.map((c) => (
+                <li class="flex items-start gap-2.5 text-charcoal/80"><span class="text-sage mt-1 shrink-0" aria-hidden="true">✓</span><span>{c}</span></li>
+              ))}
+            </ul>
+            <a href={site.booking} target="_blank" rel="noopener" class="btn btn-primary w-full mt-6" data-ripple>{primaryCtaLabel}</a>
+            {note && <p class="mt-4 text-xs text-orange">{note}</p>}
+          </div>
+        </aside>
+      )}
+    </div>
+  </section>
+
+  {highlights.length > 0 && (
+    <section class="bg-cream section">
+      <div class="container-page">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {highlights.map((h) => (
+            <div class="card card-hover p-7 reveal">
+              {h.icon && <span class="w-12 h-12 rounded-2xl bg-sage/25 text-forest grid place-items-center mb-4"><ServiceIcon name={h.icon}/></span>}
+              <h3 class="font-display font-bold text-lg text-forest">{h.t}</h3>
+              <p class="mt-2 text-sm text-charcoal/70">{h.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <CTABand heading={ctaHeading} accent={ctaAccent} sub={ctaSub} />
+</Layout>

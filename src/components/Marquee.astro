@@ -1,0 +1,15 @@
+---
+interface Props { items: string[]; }
+const { items } = Astro.props;
+const doubled = [...items, ...items];
+---
+<div class="marquee overflow-hidden py-5 border-y border-forest/10 bg-ivory select-none" aria-hidden="true">
+  <div class="marquee-track items-center gap-0">
+    {doubled.map((item) => (
+      <span class="flex items-center">
+        <span class="px-6 font-display text-xl md:text-2xl font-semibold text-forest/85 whitespace-nowrap">{item}</span>
+        <span class="text-sage text-2xl">✦</span>
+      </span>
+    ))}
+  </div>
+</div>

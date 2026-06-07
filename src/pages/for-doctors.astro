@@ -1,0 +1,41 @@
+---
+import AudiencePage from '../components/AudiencePage.astro';
+import { site } from '../data/site';
+---
+<AudiencePage
+  seoTitle="For Doctors — GP Referrals"
+  description="Refer your patients to PhysioLogix in West Perth. Diagnostic-first physiotherapy, clear communication back to you, and founder-led continuity of care."
+  path="/for-doctors"
+  eyebrow="For referring GPs"
+  title="A physiotherapy partner you can"
+  accent="refer to with confidence."
+  lead="We work alongside GPs across Perth's inner city. Your patients see one experienced clinician, get a thorough assessment, and you get clear communication back."
+  crumbs={[{ label: 'For Doctors' }]}
+  intro={[
+    "PhysioLogix is a founder-led clinic. Every patient you refer is assessed personally by Vincent Harvey — an AHPRA-registered physiotherapist with 10+ years of clinical experience and specialised-interest areas in lower back pain, neck pain, headaches and sports injuries.",
+    "We take a diagnostic-first approach and build individualised, evidence-based treatment plans. Where it's clinically useful, we combine manual therapy, dry needling, clinical reformer pilates and structured exercise rehabilitation.",
+    "We're happy to provide assessment summaries and progress updates to keep you in the loop, and to discuss complex cases directly. We also manage EPC / CDM, WorkCover WA, ICWA / CTP, NDIS and DVA pathways.",
+  ]}
+  checklistHeading="Referral essentials"
+  checklist={[
+    'AHPRA-registered physiotherapist (Vincent Harvey)',
+    'Assessment summaries and progress updates on request',
+    'EPC / CDM, WorkCover, ICWA, NDIS and DVA pathways',
+    'Continuity of care — one clinician per patient',
+    'Online booking via Cliniko',
+  ]}
+  primaryCtaLabel="Refer a patient"
+  highlights={[
+    { t: 'Diagnostic depth', d: 'Thorough assessment that identifies the real cause, communicated clearly.', icon: 'cap' },
+    { t: 'Continuity of care', d: 'Your patient sees the same clinician throughout — no locum churn.', icon: 'physio' },
+    { t: 'Multi-modal clinic', d: 'Physio, clinical pilates, dry needling and rehab under one roof.', icon: 'recovery' },
+  ]}
+  ctaHeading="Let's work"
+  ctaAccent="together."
+  ctaSub={`Call ${site.phoneDisplay} to discuss a referral or a complex case directly with Vincent.`}
+>
+  <div class="card p-7 reveal mt-2">
+    <h2 class="font-display font-bold text-xl text-forest mb-2">How to refer</h2>
+    <p class="text-base text-charcoal/75">Send referrals to <a href={`mailto:${site.email}`} class="text-forest font-semibold underline underline-offset-2">{site.email}</a> or have your patient book directly online. Include relevant history, imaging and the funding pathway, and we'll take it from there.</p>
+  </div>
+</AudiencePage>

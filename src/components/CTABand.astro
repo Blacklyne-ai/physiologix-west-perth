@@ -1,0 +1,29 @@
+---
+import { site } from '../data/site';
+interface Props {
+  heading?: string;
+  accent?: string;
+  sub?: string;
+  tone?: 'forest' | 'night';
+}
+const {
+  heading = 'Ready when you are.',
+  accent = '',
+  sub = 'Book online through Cliniko, or call the clinic. Vincent personally conducts every initial assessment.',
+  tone = 'forest',
+} = Astro.props;
+const bg = tone === 'night' ? 'bg-night' : 'bg-forest';
+---
+<section class={`${bg} relative overflow-hidden`}>
+  <div class="absolute inset-0 grain opacity-[0.04]" aria-hidden="true"></div>
+  <div class="container-page section relative text-center">
+    <h2 class="font-display font-extrabold text-cream text-3xl sm:text-4xl md:text-5xl max-w-3xl mx-auto reveal">
+      {heading}{accent && <> <span class="accent">{accent}</span></>}
+    </h2>
+    <p class="mt-5 text-cream/70 max-w-xl mx-auto reveal">{sub}</p>
+    <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center reveal">
+      <a href={site.booking} target="_blank" rel="noopener" class="btn btn-sage" data-magnetic data-ripple>Book online</a>
+      <a href={`tel:${site.phoneHref}`} class="btn btn-outline !text-cream !shadow-[inset_0_0_0_1.5px_rgba(245,240,230,0.4)] hover:!bg-cream hover:!text-night">Call {site.phoneDisplay}</a>
+    </div>
+  </div>
+</section>

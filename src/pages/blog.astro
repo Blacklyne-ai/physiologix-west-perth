@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
+
+// Placeholder editorial topics — to be written by the client / Blacklyne.
+const posts = [
+  { title: 'Lower back pain: when to rest, and when to move', cat: 'Back pain', read: '5 min', excerpt: 'The old advice was bed rest. The evidence now points the other way — here\'s how to move well when your back flares up.' },
+  { title: 'Is reformer pilates actually physiotherapy?', cat: 'Pilates', read: '4 min', excerpt: 'What separates clinical reformer pilates from a studio class — and why it matters for your recovery.' },
+  { title: 'Dry needling, explained without the mystery', cat: 'Treatment', read: '4 min', excerpt: 'What dry needling does, what it feels like, and the conditions where it tends to help most.' },
+  { title: 'Returning to running after injury', cat: 'Sports', read: '6 min', excerpt: 'A staged approach to getting back on the road without flaring the thing that stopped you.' },
+  { title: 'Desk-bound neck pain: a practical guide', cat: 'Neck pain', read: '5 min', excerpt: 'Small changes to your workstation and your day that take load off your neck.' },
+  { title: 'Sciatica: what it is and what helps', cat: 'Sciatica', read: '6 min', excerpt: 'Understanding the symptom behind the pain — and the treatments that tend to settle it.' },
+];
+---
+
+<Layout
+  title="Blog"
+  description="Physiotherapy insights from PhysioLogix West Perth — practical, evidence-based articles on pain, recovery, pilates and performance."
+  path="/blog"
+>
+  <PageHero
+    eyebrow="Insights"
+    title="Evidence, minus"
+    accent="the jargon."
+    lead="Practical, plain-spoken articles on pain, recovery, movement and performance — written from the treatment room."
+    crumbs={[{ label: 'Blog' }]}
+  />
+
+  <section class="bg-ivory section">
+    <div class="container-page">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {posts.map((p) => (
+          <article class="group card card-hover p-7 flex flex-col reveal">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="chip">{p.cat}</span>
+              <span class="text-xs text-warmgrey">{p.read} read</span>
+            </div>
+            <h2 class="font-display font-bold text-xl text-forest">{p.title}</h2>
+            <p class="mt-2 text-sm text-charcoal/70 flex-1">{p.excerpt}</p>
+            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-forest/50">Coming soon</span>
+          </article>
+        ))}
+      </div>
+      <p class="mt-6 text-sm text-orange reveal">Article topics are placeholders — full posts to be written before or after launch.</p>
+    </div>
+  </section>
+
+  <CTABand heading="Got a question we should" accent="write about?" />
+</Layout>

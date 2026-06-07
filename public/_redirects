@@ -1,0 +1,25 @@
+# Cloudflare Pages 301 redirects — old Wix URLs → new clean URLs
+/pilates-west-perth-physiotherapy                                   /services/reformer-pilates            301
+/about-physiologix                                                  /about                                301
+/about-physiologix/meet-the-team-1                                  /about/team                           301
+/services/physiotherapy-west-perth                                  /services/physiotherapy               301
+/services/manual-therapy-at-physiotherapy                          /services/manual-therapy              301
+/services/pre-post-op-physiotherapy-rehabilitation-west-perth      /services/pre-post-op-rehabilitation  301
+/services/dry-needling-physiotherapy-west-perth                    /services/dry-needling                301
+/services/hydrotherapy-west-perth-physiologix                      /services/hydrotherapy                301
+/services/insurancephysiotherapy                                   /services/insurance-claims            301
+/careers-west-perth-physiotherapy                                  /careers                              301
+/common-injuries                                                   /conditions                           301
+/neck-pain                                                         /conditions/neck-pain                 301
+/upper-back-pain                                                   /conditions/upper-back-pain           301
+/common-injuries/headache-physiotherapy-relief                    /conditions/headaches                 301
+/sciatica                                                          /conditions/sciatica                  301
+/common-injuries/shoulder-pain-bursitis-physiotherapy             /conditions/shoulder-bursitis         301
+/common-injuries/plantar-fasciitis-physiotherapy-treatment        /conditions/plantar-fasciitis         301
+/tennis-elbow-physiotherapy                                        /conditions/tennis-elbow              301
+/lower-back-pain-physiotherapy                                     /conditions/lower-back-pain           301
+/common-injuries/knee-pain-physiotherapy-west-perth               /conditions/knee-pain                 301
+/common-injuries/hip-bursitis-physiotherapy-treatment             /conditions/hip-bursitis              301
+/contact-us                                                        /contact                              301
+/blog-1                                                            /blog                                 301
+/physiotherapyfaq                                                  /faq                                  301

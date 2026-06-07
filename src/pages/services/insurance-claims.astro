@@ -1,0 +1,29 @@
+---
+import AudiencePage from '../../components/AudiencePage.astro';
+import { insurers } from '../../data/site';
+---
+<AudiencePage
+  seoTitle="Insurance & Private Health Claims"
+  description="NIB Preferred Provider physiotherapy in West Perth, with HICAPS on-the-spot claiming. We also process HBF, Medibank, Bupa, HCF and Westfund."
+  path="/services/insurance-claims"
+  eyebrow="Rebates & claims"
+  title="Claim back"
+  accent="instantly."
+  lead="We're an NIB Preferred Provider with a HICAPS terminal, so you can claim your rebate on the spot — and we process all the major Australian health funds."
+  crumbs={[{ label: 'Services', href: '/services' }, { label: 'Insurance & Private Health' }]}
+  intro={[
+    "If you hold extras cover that includes physiotherapy, you can claim a rebate on your treatment. As an NIB Preferred Provider, our NIB members often claim back more — and with HICAPS in the clinic, the rebate comes off your fee on the spot.",
+    "We also process claims for the other major funds, so most patients simply tap their fund card and pay the gap. Rebate amounts depend on your individual level of cover, so it's worth confirming the details with your fund.",
+  ]}
+  checklistHeading="Funds we process"
+  checklist={insurers}
+  note="Funds other than NIB to be confirmed by the client."
+  highlights={[
+    { t: 'NIB Preferred Provider', d: 'Recognised NIB provider status — confirmed on the existing clinic listing.', icon: 'shield' },
+    { t: 'HICAPS on the spot', d: 'Tap your health fund card and claim your rebate immediately. Pay only the gap.', icon: 'star' },
+    { t: 'All major funds', d: 'HBF, Medibank, Bupa, HCF and Westfund processed in clinic (to be confirmed).', icon: 'physio' },
+  ]}
+  ctaHeading="Use your"
+  ctaAccent="cover."
+  ctaSub="Book online and bring your health fund card. We'll handle the claim."
+/>

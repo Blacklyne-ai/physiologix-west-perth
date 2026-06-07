@@ -1,0 +1,29 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+interface Crumb { label: string; href?: string; }
+interface Props {
+  eyebrow?: string;
+  title: string;
+  accent?: string; // appended accent phrase shown in sage
+  lead?: string;
+  crumbs?: Crumb[];
+  tone?: 'ivory' | 'cream';
+}
+const { eyebrow, title, accent, lead, crumbs, tone = 'cream' } = Astro.props;
+const bg = tone === 'cream' ? 'bg-cream' : 'bg-ivory';
+---
+<section class={`${bg} relative overflow-hidden pt-32 md:pt-40 pb-12 md:pb-16 border-b border-forest/10`}>
+  <!-- decorative sage line -->
+  <svg class="absolute -top-10 right-0 w-[40rem] max-w-[60vw] opacity-[0.07] text-sage pointer-events-none" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+    <path d="M-20 320 C120 200 200 360 420 120" stroke="currentColor" stroke-width="44" stroke-linecap="round"/>
+  </svg>
+  <div class="container-page relative">
+    {crumbs && <div class="mb-6"><Breadcrumbs items={crumbs} /></div>}
+    {eyebrow && <p class="eyebrow text-forest mb-4 reveal">{eyebrow}</p>}
+    <h1 class="font-display font-extrabold text-forest text-4xl sm:text-5xl md:text-6xl lg:text-7xl max-w-4xl reveal">
+      {title}{accent && <> <span class="accent">{accent}</span></>}
+    </h1>
+    {lead && <p class="mt-6 text-lg md:text-xl text-charcoal/75 max-w-2xl reveal">{lead}</p>}
+    <slot />
+  </div>
+</section>

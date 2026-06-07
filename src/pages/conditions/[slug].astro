@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABand from '../../components/CTABand.astro';
+import { conditions, services, site } from '../../data/site';
+
+export function getStaticPaths() {
+  return conditions.map((c) => ({ params: { slug: c.slug }, props: { condition: c } }));
+}
+
+const { condition } = Astro.props;
+const relatedServices = services.filter((s) => condition.related.includes(s.slug));
+const relatedConditions = conditions.filter((c) => c.slug !== condition.slug).slice(0, 4);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalCondition',
+  name: condition.name,
+  description: condition.what,
+  possibleTreatment: relatedServices.map((s) => ({ '@type': 'MedicalTherapy', name: s.title })),
+};
+---
+
+<Layout
+  title={`${condition.name} Physiotherapy West Perth`}
+  description={`${condition.what} ${condition.treat}`.slice(0, 155)}
+  path={`/conditions/${condition.slug}`}
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Conditions we treat"
+    title={condition.name}
+    lead={condition.short}
+    crumbs={[{ label: 'Conditions', href: '/conditions' }, { label: condition.name }]}
+  >
+    <div class="mt-8 flex flex-col sm:flex-row gap-3 reveal">
+      <a href={site.booking} target="_blank" rel="noopener" class="btn btn-primary" data-magnetic data-ripple>Book an assessment</a>
+      <a href={`tel:${site.phoneHref}`} class="btn btn-outline">Call {site.phoneDisplay}</a>
+    </div>
+  </PageHero>
+
+  <article class="bg-ivory section">
+    <div class="container-page grid lg:grid-cols-12 gap-10 lg:gap-16">
+      <div class="lg:col-span-8 space-y-12 text-lg">
+        <section class="reveal">
+          <h2 class="font-display font-bold text-2xl md:text-3xl text-forest mb-4">What is {condition.name.toLowerCase()}?</h2>
+          <p class="text-charcoal/80 leading-relaxed first-letter:font-display first-letter:text-5xl first-letter:font-extrabold first-letter:text-forest first-letter:float-left first-letter:mr-2 first-letter:leading-[0.8]">{condition.what}</p>
+        </section>
+
+        <div class="grid sm:grid-cols-2 gap-6">
+          <section class="card p-7 reveal">
+            <h2 class="font-display font-bold text-xl text-forest mb-4">Common symptoms</h2>
+            <ul class="space-y-2.5">
+              {condition.symptoms.map((s) => (
+                <li class="flex items-start gap-2.5 text-base text-charcoal/80"><span class="text-sage mt-1 shrink-0" aria-hidden="true">•</span><span>{s}</span></li>
+              ))}
+            </ul>
+          </section>
+          <section class="card p-7 reveal">
+            <h2 class="font-display font-bold text-xl text-forest mb-4">Common causes</h2>
+            <ul class="space-y-2.5">
+              {condition.causes.map((s) => (
+                <li class="flex items-start gap-2.5 text-base text-charcoal/80"><span class="text-sage mt-1 shrink-0" aria-hidden="true">•</span><span>{s}</span></li>
+              ))}
+            </ul>
+          </section>
+        </div>
+
+        <section class="reveal">
+          <h2 class="font-display font-bold text-2xl md:text-3xl text-forest mb-4">How we treat it</h2>
+          <p class="text-charcoal/80 leading-relaxed">{condition.treat}</p>
+          <div class="mt-6 rounded-3xl bg-forest p-7 text-cream">
+            <p class="font-display italic text-xl leading-relaxed">“We don't just label the symptom. We find what's actually driving your pain — then build a plan around it.”</p>
+            <p class="mt-3 text-cream/70 text-sm">— Vincent Harvey, Senior Physiotherapist + Founder</p>
+          </div>
+          <a href={site.booking} target="_blank" rel="noopener" class="btn btn-primary mt-7" data-magnetic data-ripple>Book an assessment</a>
+        </section>
+
+        {relatedServices.length > 0 && (
+          <section class="reveal">
+            <h2 class="font-display font-bold text-2xl text-forest mb-4">Treatments we may use</h2>
+            <div class="flex flex-wrap gap-3">
+              {relatedServices.map((s) => (
+                <a href={`/services/${s.slug}`} class="chip hover:bg-sage/40 transition-colors">{s.title} →</a>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+
+      <aside class="lg:col-span-4">
+        <div class="card p-7 sticky top-28 reveal">
+          <p class="eyebrow text-forest mb-3">Get started</p>
+          <h2 class="font-display font-bold text-xl text-forest">Book with Vincent</h2>
+          <p class="mt-2 text-sm text-charcoal/70">Every initial assessment is conducted by Vincent personally. Allow 45–60 minutes.</p>
+          <a href={site.booking} target="_blank" rel="noopener" class="btn btn-primary w-full mt-5" data-ripple>Book online</a>
+          <a href={`tel:${site.phoneHref}`} class="btn btn-outline w-full mt-3">Call {site.phoneDisplay}</a>
+          <hr class="my-6 border-forest/10" />
+          <p class="eyebrow text-forest/60 mb-3">Related conditions</p>
+          <ul class="space-y-2 text-sm">
+            {relatedConditions.map((c) => (
+              <li><a href={`/conditions/${c.slug}`} class="text-charcoal/75 hover:text-forest">{c.name} →</a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <CTABand heading="Let's find the" accent="real cause." />
+</Layout>

@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
+import { faqs } from '../data/site';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<Layout
+  title="FAQ"
+  description="Answers to common questions about physiotherapy at PhysioLogix West Perth — referrals, first appointments, health fund rebates, NDIS, DVA and booking."
+  path="/faq"
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Good to know"
+    title="Frequently asked"
+    accent="questions."
+    lead="The things patients ask us most. Still not sure? Give us a call and we'll happily help."
+    crumbs={[{ label: 'FAQ' }]}
+  />
+
+  <section class="bg-ivory section">
+    <div class="container-page max-w-3xl">
+      <div class="space-y-3">
+        {faqs.map((f, i) => (
+          <details class="card p-0 overflow-hidden group reveal" {...(i === 0 ? { open: true } : {})}>
+            <summary class="cursor-pointer list-none p-6 flex items-center justify-between gap-4 font-display font-bold text-lg text-forest">
+              {f.q}
+              <span class="shrink-0 w-8 h-8 rounded-full bg-sage/25 text-forest grid place-items-center transition-transform group-open:rotate-45" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </summary>
+            <div class="px-6 pb-6 -mt-1 text-charcoal/80 leading-relaxed">{f.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABand heading="Still have a" accent="question?" />
+</Layout>

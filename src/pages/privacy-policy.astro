@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+
+const sections = [
+  { h: 'Who we are', b: [`${site.legalName} (“we”, “us”, “our”) operates a physiotherapy and pilates clinic at ${site.address.full}. We are committed to protecting your privacy and handling your personal information in accordance with the Australian Privacy Principles (APPs) under the Privacy Act 1988 (Cth).`] },
+  { h: 'Information we collect', b: ['We may collect personal information including your name, contact details, date of birth, Medicare or health fund details, and health information relevant to your care. We collect this information directly from you, or from your referring practitioner where applicable.', 'When you use our website, we may collect limited technical information such as your IP address and browsing activity through cookies and analytics.'] },
+  { h: 'How we use your information', b: ['We use your information to provide physiotherapy services, manage appointments and billing, process health fund, WorkCover, ICWA, NDIS and DVA claims, communicate with you and your other treating practitioners, and meet our legal and professional obligations.', 'We will only use your information for the purpose for which it was collected, a directly related purpose you would reasonably expect, or as otherwise permitted by law.'] },
+  { h: 'Health information', b: ['Health information is sensitive information under the Privacy Act. We collect it only with your consent or as otherwise permitted by law, store it securely, and disclose it only where necessary for your care or as required by law.'] },
+  { h: 'Disclosure', b: ['We may disclose your information to your referring GP and other treating practitioners involved in your care, your health fund or relevant insurer for claiming, and third parties where required or authorised by law. We do not sell your personal information.'] },
+  { h: 'Cookies', b: ['Our website uses cookies to improve your experience and understand site usage. You can accept or reject non-essential cookies via our cookie banner, and you can manage cookies through your browser settings.'] },
+  { h: 'Data security', b: ['We take reasonable steps to protect your personal information from misuse, loss, unauthorised access, modification and disclosure, including secure storage and access controls.'] },
+  { h: 'Access and correction', b: ['You may request access to the personal information we hold about you, and ask us to correct it if it is inaccurate, out of date or incomplete. Contact us using the details below.'] },
+  { h: 'Complaints', b: ['If you have a concern about how we have handled your personal information, please contact us first. If you are not satisfied with our response, you may contact the Office of the Australian Information Commissioner (OAIC) at oaic.gov.au.'] },
+  { h: 'Contact us', b: [`For any privacy matter, contact us on ${site.phoneDisplay} or at ${site.email}.`] },
+];
+---
+
+<Layout title="Privacy Policy" description="How PhysioLogix collects, uses and protects your personal information under the Australian Privacy Principles and Privacy Act 1988." path="/privacy-policy" noindex={true}>
+  <PageHero eyebrow="Legal" title="Privacy" accent="Policy" lead="How we handle your personal information, in line with the Australian Privacy Principles." crumbs={[{ label: 'Privacy Policy' }]} />
+  <section class="bg-ivory section">
+    <div class="container-page max-w-3xl">
+      <p class="text-sm text-warmgrey mb-8 reveal">Last updated: June 2026. ABN to be confirmed.</p>
+      <div class="space-y-8">
+        {sections.map((s) => (
+          <div class="reveal">
+            <h2 class="font-display font-bold text-2xl text-forest mb-3">{s.h}</h2>
+            {s.b.map((p) => <p class="text-charcoal/80 leading-relaxed mb-3">{p}</p>)}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

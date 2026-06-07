@@ -1,0 +1,118 @@
+---
+import { site, reviews } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  image?: string;
+  type?: string;
+  schema?: object | object[]; // extra page-level schema graph nodes
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  path = '',
+  image = '/photos/hero/og-image-existing.jpg',
+  type = 'website',
+  schema,
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(path || Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+const fullTitle = path === '' || path === '/'
+  ? `${site.legalName} | Physiotherapy + Reformer Pilates, West Perth`
+  : `${title} | ${site.name} West Perth`;
+
+// ----- Core LocalBusiness / Physiotherapist graph -----
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['MedicalBusiness', 'Physiotherapy'],
+  '@id': `${Astro.site}#business`,
+  name: site.legalName,
+  alternateName: site.name,
+  url: Astro.site?.href,
+  telephone: `+${site.phoneHref.replace('+', '')}`,
+  email: site.email,
+  image: ogImage,
+  logo: new URL('/favicon.svg', Astro.site).href,
+  slogan: site.motto,
+  foundingDate: String(site.founded),
+  priceRange: '$$',
+  currenciesAccepted: 'AUD',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '6/567 Newcastle Street',
+    addressLocality: site.address.locality,
+    addressRegion: site.address.region,
+    postalCode: site.address.postcode,
+    addressCountry: 'AU',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: -31.9436, longitude: 115.8412 },
+  areaServed: site.areasServed.map((a) => ({ '@type': 'City', name: a })),
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: site.rating,
+    reviewCount: String(site.reviewCount),
+    bestRating: '5',
+    ratingExplanation: 'Verified Google reviews',
+  },
+  review: reviews.map((r) => ({
+    '@type': 'Review',
+    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+    author: { '@type': 'Person', name: 'PhysioLogix patient' },
+    reviewBody: r.text,
+    publisher: { '@type': 'Organization', name: 'Google' },
+  })),
+  openingHoursSpecification: [
+    { day: 'Monday', o: '13:30', c: '18:30' },
+    { day: 'Tuesday', o: '09:30', c: '18:30' },
+    { day: 'Thursday', o: '09:30', c: '18:30' },
+    { day: 'Friday', o: '13:30', c: '17:30' },
+    { day: 'Saturday', o: '09:00', c: '12:00' },
+  ].map((h) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: h.day,
+    opens: h.o,
+    closes: h.c,
+  })),
+  founder: {
+    '@type': 'Person',
+    name: 'Vincent Harvey',
+    jobTitle: 'Senior Physiotherapist',
+    alumniOf: { '@type': 'CollegeOrUniversity', name: 'Curtin University' },
+    knowsAbout: [
+      'Physiotherapy', 'Lower back pain', 'Neck pain', 'Headaches',
+      'Sports injuries', 'Dry needling', 'Clinical reformer pilates', 'Hydrotherapy',
+    ],
+  },
+};
+
+const graph = [businessSchema, ...(schema ? (Array.isArray(schema) ? schema : [schema]) : [])];
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<meta property="og:type" content={type} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content={site.legalName} />
+<meta property="og:locale" content="en_AU" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<meta name="geo.region" content="AU-WA" />
+<meta name="geo.placename" content="West Perth" />
+
+<script type="application/ld+json" set:html={JSON.stringify(graph)} is:inline />

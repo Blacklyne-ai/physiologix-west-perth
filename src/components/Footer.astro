@@ -1,0 +1,115 @@
+---
+import Logo from './Logo.astro';
+import { site, services, conditions } from '../data/site';
+
+const insuranceLinks = [
+  { label: 'Private Health', href: '/services/insurance-claims' },
+  { label: 'Workers Compensation', href: '/services/workers-compensation' },
+  { label: 'Motor Vehicle Claims', href: '/services/motor-vehicle-claims' },
+  { label: 'NDIS', href: '/ndis' },
+  { label: 'DVA', href: '/dva' },
+  { label: 'Pricing & Rebates', href: '/pricing-rebates' },
+];
+const clinicLinks = [
+  { label: 'About', href: '/about' },
+  { label: 'Our Team', href: '/about/team' },
+  { label: 'Reviews', href: '/reviews' },
+  { label: 'For Doctors', href: '/for-doctors' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Careers', href: '/careers' },
+  { label: 'Contact', href: '/contact' },
+];
+const topServices = services.slice(0, 6);
+const topConditions = conditions.slice(0, 6);
+const year = 2026;
+---
+
+<footer class="bg-night text-cream/80">
+  <div class="container-page py-16">
+    <!-- Top -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12 border-b border-cream/10">
+      <div>
+        <Logo tone="light" />
+        <p class="mt-4 font-display italic text-cream/60 text-lg">{site.motto} · West Perth</p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href={site.booking} target="_blank" rel="noopener" class="btn btn-sage" data-magnetic data-ripple>Book online</a>
+        <a href={`tel:${site.phoneHref}`} class="btn btn-outline !text-cream !shadow-[inset_0_0_0_1.5px_rgba(245,240,230,0.4)] hover:!bg-cream hover:!text-night">Call {site.phoneDisplay}</a>
+      </div>
+    </div>
+
+    <!-- Columns -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 py-12">
+      <div>
+        <h3 class="eyebrow text-sage mb-4">Services</h3>
+        <ul class="space-y-2.5 text-sm">
+          {topServices.map((s) => (
+            <li><a class="hover:text-sage transition-colors" href={`/services/${s.slug}`}>{s.title}</a></li>
+          ))}
+          <li><a class="text-sage font-semibold hover:underline" href="/services">All services →</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="eyebrow text-sage mb-4">Conditions</h3>
+        <ul class="space-y-2.5 text-sm">
+          {topConditions.map((c) => (
+            <li><a class="hover:text-sage transition-colors" href={`/conditions/${c.slug}`}>{c.name}</a></li>
+          ))}
+          <li><a class="text-sage font-semibold hover:underline" href="/conditions">All conditions →</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="eyebrow text-sage mb-4">Insurance & Funding</h3>
+        <ul class="space-y-2.5 text-sm">
+          {insuranceLinks.map((l) => (
+            <li><a class="hover:text-sage transition-colors" href={l.href}>{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h3 class="eyebrow text-sage mb-4">Clinic</h3>
+        <ul class="space-y-2.5 text-sm">
+          {clinicLinks.map((l) => (
+            <li><a class="hover:text-sage transition-colors" href={l.href}>{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Contact + trust -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-10 border-t border-cream/10 text-sm">
+      <div>
+        <h3 class="eyebrow text-sage mb-3">Visit</h3>
+        <address class="not-italic text-cream/70 leading-relaxed">
+          {site.address.suite}<br />{site.address.locality} {site.address.region} {site.address.postcode}
+        </address>
+      </div>
+      <div>
+        <h3 class="eyebrow text-sage mb-3">Contact</h3>
+        <p class="text-cream/70">
+          <a class="hover:text-sage" href={`tel:${site.phoneHref}`}>{site.phoneDisplay}</a><br />
+          <a class="hover:text-sage" href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
+      <div>
+        <h3 class="eyebrow text-sage mb-3">Trust</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip !bg-cream/10 !text-cream !border-cream/20">★ 5.0 · 81 reviews</span>
+          <span class="chip !bg-cream/10 !text-cream !border-cream/20">NIB Preferred Provider</span>
+          <span class="chip !bg-cream/10 !text-cream !border-cream/20">AHPRA Registered</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="pt-8 border-t border-cream/10 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center text-xs text-cream/50">
+      <p>© {year} {site.legalName}. ABN [to be confirmed]. AHPRA Registered Physiotherapy Practice.</p>
+      <div class="flex flex-wrap gap-4">
+        <a href="/privacy-policy" class="hover:text-sage">Privacy Policy</a>
+        <a href="/terms" class="hover:text-sage">Terms</a>
+        <button type="button" data-cookie-settings class="hover:text-sage">Cookie settings</button>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,68 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABand from '../../components/CTABand.astro';
+import { conditions } from '../../data/site';
+
+const priority = conditions.filter((c) => c.priority);
+const rest = conditions.filter((c) => !c.priority);
+const alsoTreat = [
+  'Frozen Shoulder', 'Rotator Cuff Injuries', 'ACL / MCL / PCL Injuries', 'Ankle Sprains',
+  'Achilles Tendinopathy', 'IT Band Syndrome', "Runner's Knee", 'TMJ Dysfunction',
+  'Postural Pain', 'Pregnancy-Related Pain',
+];
+---
+
+<Layout
+  title="Conditions We Treat"
+  description="Physiotherapy for lower back pain, neck pain, headaches, sciatica, shoulder bursitis, plantar fasciitis, tennis elbow, knee pain and more in West Perth."
+  path="/conditions"
+>
+  <PageHero
+    eyebrow="Common conditions"
+    title="Treatment for what's"
+    accent="actually causing your pain."
+    lead="From desk-bound aches to sports injuries, we diagnose the real cause and build a plan around it. Here are some of the conditions we treat most often."
+    crumbs={[{ label: 'Conditions' }]}
+  />
+
+  <section class="bg-ivory section">
+    <div class="container-page">
+      <p class="eyebrow text-forest mb-5 reveal">Vincent's specialised-interest areas</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+        {priority.map((c) => (
+          <a href={`/conditions/${c.slug}`} class="group card card-hover p-7 reveal border-sage/40">
+            <span class="chip mb-3">Specialised interest</span>
+            <h2 class="font-display font-bold text-xl text-forest">{c.name}</h2>
+            <p class="mt-2 text-sm text-charcoal/70">{c.short}</p>
+            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-forest group-hover:gap-3 transition-all">Learn more <span aria-hidden="true">→</span></span>
+          </a>
+        ))}
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {rest.map((c) => (
+          <a href={`/conditions/${c.slug}`} class="group card card-hover p-6 flex items-center justify-between gap-3 reveal">
+            <div>
+              <h2 class="font-display font-bold text-lg text-forest">{c.name}</h2>
+              <p class="text-sm text-charcoal/65 mt-0.5">{c.short}</p>
+            </div>
+            <span class="text-sage text-xl group-hover:translate-x-1 transition-transform" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-cream section-tight">
+    <div class="container-page">
+      <h2 class="font-display font-bold text-2xl md:text-3xl text-forest mb-2 reveal">We also treat</h2>
+      <p class="text-charcoal/70 mb-6 reveal">Not seeing your condition? These are just as common in the clinic. Get in touch and we'll let you know how we can help.</p>
+      <div class="flex flex-wrap gap-2.5">
+        {alsoTreat.map((c) => <span class="chip reveal">{c}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <CTABand heading="Find treatment for" accent="your pain." />
+</Layout>

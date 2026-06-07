@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
+
+const partners = [
+  { t: 'General Practitioners', d: 'We work closely with referring GPs across West Perth and the inner city.' },
+  { t: 'Sports & Exercise Doctors', d: 'For complex sporting injuries that benefit from a medical opinion.' },
+  { t: 'Orthopaedic Surgeons', d: 'For pre- and post-operative rehabilitation, following surgical protocols.' },
+  { t: 'Podiatrists', d: 'For foot and lower limb assessment and custom orthotics.' },
+  { t: 'Dietitians', d: 'For nutrition support alongside rehabilitation and performance goals.' },
+  { t: 'Pilates & Fitness Instructors', d: 'For ongoing movement once your rehabilitation is complete.' },
+];
+---
+
+<Layout
+  title="Affiliated Services"
+  description="PhysioLogix works alongside trusted Perth practitioners — GPs, sports doctors, surgeons, podiatrists, dietitians and more — for joined-up care."
+  path="/affiliated-services"
+>
+  <PageHero
+    eyebrow="Working together"
+    title="Alongside trusted"
+    accent="Perth practitioners."
+    lead="Good care rarely happens in isolation. We refer to — and receive referrals from — a network of trusted practitioners across Perth, so you get joined-up support."
+    crumbs={[{ label: 'Affiliated Services' }]}
+  />
+
+  <section class="bg-ivory section">
+    <div class="container-page">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {partners.map((p) => (
+          <div class="card card-hover p-7 reveal">
+            <h2 class="font-display font-bold text-lg text-forest">{p.t}</h2>
+            <p class="mt-2 text-sm text-charcoal/70">{p.d}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-6 text-sm text-orange reveal">List of named affiliated practitioners to be provided by the client.</p>
+    </div>
+  </section>
+
+  <CTABand heading="Need a" accent="referral?" sub="Ask us — we'll point you toward the right practitioner for your situation." />
+</Layout>

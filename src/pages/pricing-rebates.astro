@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
+import { insurers, site } from '../data/site';
+
+const fees = [
+  { name: 'Initial Physiotherapy Assessment', detail: '45–60 minutes with Vincent', price: 'Price to be confirmed' },
+  { name: 'Standard Follow-up', detail: 'Subsequent physiotherapy treatment', price: 'Price to be confirmed' },
+  { name: 'Clinical Reformer Pilates (1:1)', detail: 'One-on-one with a physiotherapist', price: 'Price to be confirmed' },
+  { name: 'Reformer Pilates Class', detail: 'Small group session', price: 'Price to be confirmed' },
+  { name: 'Dry Needling', detail: 'Often combined within a treatment', price: 'Price to be confirmed' },
+  { name: 'Remedial Massage', detail: 'With Alan Mahmood', price: 'Price to be confirmed' },
+];
+
+const funding = [
+  { t: 'Private health (extras)', d: 'NIB Preferred Provider with a HICAPS terminal — claim your rebate on the spot. We also process HBF, Medibank, Bupa, HCF and Westfund. Confirm your individual cover with your fund.' },
+  { t: 'Medicare (EPC / CDM)', d: 'If your GP has set up a Chronic Disease Management plan, Medicare may cover part of the cost for eligible patients. Bring your referral.' },
+  { t: 'Workers Compensation', d: 'WorkCover WA claims handled, with paperwork managed for you.' },
+  { t: 'Motor vehicle (ICWA / CTP)', d: 'Post-accident rehabilitation under your motor vehicle claim.' },
+  { t: 'NDIS', d: 'We welcome NDIS participants — see our NDIS page for claiming details.' },
+  { t: 'DVA', d: 'DVA cardholders welcome — see our DVA page for eligibility.' },
+];
+---
+
+<Layout
+  title="Pricing & Rebates"
+  description="Transparent physiotherapy fees in West Perth, plus private health, Medicare, Workers Comp, motor vehicle, NDIS and DVA funding options."
+  path="/pricing-rebates"
+>
+  <PageHero
+    eyebrow="Fees & funding"
+    title="Clear on cost."
+    accent="Clear on claims."
+    lead="No surprises. Here's how our fees and the main funding pathways work. Final fees to be confirmed by the clinic."
+    crumbs={[{ label: 'Pricing & Rebates' }]}
+  />
+
+  <section class="bg-ivory section">
+    <div class="container-page grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-7">
+        <h2 class="font-display font-bold text-2xl md:text-3xl text-forest mb-6 reveal">Service fees</h2>
+        <div class="space-y-3">
+          {fees.map((f) => (
+            <div class="card p-6 flex flex-wrap items-center justify-between gap-3 reveal">
+              <div>
+                <p class="font-display font-bold text-forest">{f.name}</p>
+                <p class="text-sm text-charcoal/65">{f.detail}</p>
+              </div>
+              <span class="chip">{f.price}</span>
+            </div>
+          ))}
+        </div>
+        <p class="mt-4 text-xs text-orange reveal">Pricing for each tier to be confirmed by the client before launch.</p>
+      </div>
+
+      <aside class="lg:col-span-5">
+        <div class="card p-7 sticky top-28 reveal">
+          <h2 class="font-display font-bold text-xl text-forest mb-3">Accepted health funds</h2>
+          <div class="flex flex-wrap gap-2 mb-4">
+            {insurers.map((i) => <span class="chip">{i}</span>)}
+          </div>
+          <p class="text-sm text-charcoal/70">NIB Preferred Provider. Other funds to be confirmed. HICAPS available for on-the-spot claiming.</p>
+          <a href={site.booking} target="_blank" rel="noopener" class="btn btn-primary w-full mt-5" data-ripple>Book online</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="bg-cream section">
+    <div class="container-page">
+      <div class="max-w-2xl mb-10 reveal">
+        <p class="eyebrow text-forest mb-3">Funding pathways</p>
+        <h2 class="font-display font-extrabold text-forest text-3xl md:text-4xl">However you're <span class="accent">covered.</span></h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {funding.map((f) => (
+          <div class="card card-hover p-7 reveal">
+            <h3 class="font-display font-bold text-lg text-forest">{f.t}</h3>
+            <p class="mt-2 text-sm text-charcoal/70">{f.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABand heading="Questions about" accent="cover?" sub={`Call ${site.phoneDisplay} and we'll talk you through your options before you book.`} />
+</Layout>

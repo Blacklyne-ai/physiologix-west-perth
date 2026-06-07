@@ -1,0 +1,22 @@
+---
+// Text wordmark: PHYSIO + LOGIX with electric-sage X.
+// Works on both light (ivory) and dark (night) surfaces via `tone`.
+interface Props {
+  tone?: 'dark' | 'light';
+  withTagline?: boolean;
+  class?: string;
+}
+const { tone = 'dark', withTagline = false, class: cls = '' } = Astro.props;
+const base = tone === 'light' ? 'text-cream' : 'text-forest';
+---
+
+<a href="/" class={`group inline-flex flex-col leading-none ${cls}`} aria-label="PhysioLogix — home">
+  <span class="font-display font-extrabold tracking-[-0.03em] text-2xl">
+    <span class={base}>PHYSIO</span><span class={base}>LOGI</span><span class="text-sage">X</span>
+  </span>
+  {withTagline && (
+    <span class={`mt-1 font-display italic text-[0.7rem] tracking-tight ${tone === 'light' ? 'text-cream/70' : 'text-warmgrey'}`}>
+      Physiotherapy at the Speed of Life
+    </span>
+  )}
+</a>

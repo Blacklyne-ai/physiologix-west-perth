@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import ReviewCard from '../components/ReviewCard.astro';
+import CTABand from '../components/CTABand.astro';
+import { reviews, reviewDisclaimer, site } from '../data/site';
+
+const themes = [
+  { t: 'Diagnostic depth', d: '“Thorough”, “knowledgeable”, “finds the real cause, not a quick fix.”' },
+  { t: 'Patient education', d: '“Makes sure you understand each exercise”, “takes the time to explain.”' },
+  { t: 'Multi-modal care', d: 'Dry needling, exercise programmes, stretching and technique changes — together.' },
+  { t: 'Durable results', d: '“Sciatica resolved”, “back on track”, “significant improvements.”' },
+];
+---
+
+<Layout
+  title="Reviews"
+  description="5.0★ from 81 Google reviews. Read what PhysioLogix patients say about Vincent Harvey's physiotherapy care in West Perth."
+  path="/reviews"
+>
+  <PageHero
+    eyebrow="What patients say"
+    title="5.0 ★ from"
+    accent="81 Google reviews."
+    lead="Our patients are our strongest advocates — and many find us because a friend sent them. Here are a few of their words, verbatim from Google."
+    crumbs={[{ label: 'Reviews' }]}
+  >
+    <div class="mt-8 flex flex-wrap items-center gap-4 reveal">
+      <span class="flex items-center gap-1 text-sage">
+        {Array.from({ length: 5 }).map(() => (<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3 6.5 7 .9-5.2 4.8 1.4 7-6.2-3.6L6 21.2l1.4-7L2.2 9.4l7-.9z"/></svg>))}
+      </span>
+      <span class="font-display font-bold text-2xl text-forest tnum">5.0 · 81 reviews</span>
+    </div>
+  </PageHero>
+
+  <section class="bg-ivory section">
+    <div class="container-page">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
+        {reviews.map((r) => <ReviewCard review={r} />)}
+      </div>
+      <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 justify-between reveal">
+        <a href={site.reviewsUrl} target="_blank" rel="noopener" class="btn btn-primary" data-magnetic data-ripple>See all reviews on Google</a>
+        <p class="text-xs text-warmgrey max-w-md">{reviewDisclaimer}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-cream section">
+    <div class="container-page">
+      <div class="max-w-2xl mb-10 reveal">
+        <p class="eyebrow text-forest mb-3">The recurring themes</p>
+        <h2 class="font-display font-extrabold text-forest text-3xl md:text-4xl">What patients <span class="accent">keep saying.</span></h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {themes.map((t) => (
+          <div class="card card-hover p-7 reveal">
+            <h3 class="font-display font-bold text-lg text-forest">{t.t}</h3>
+            <p class="mt-2 text-sm text-charcoal/70">{t.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABand heading="Become our next" accent="five-star review." />
+</Layout>

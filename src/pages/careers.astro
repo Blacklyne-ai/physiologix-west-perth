@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
+import { site } from '../data/site';
+
+const values = [
+  { t: 'Care over volume', d: 'We keep the clinic small on purpose. You get the time to treat people properly.' },
+  { t: 'Diagnostic-first', d: 'We value clinicians who dig into the cause, not just the symptom.' },
+  { t: 'Keep learning', d: 'We back ongoing professional development and advanced training.' },
+];
+---
+
+<Layout
+  title="Careers"
+  description="Join PhysioLogix in West Perth. We're interested in physiotherapists and allied health professionals who share our diagnostic-first standard of care."
+  path="/careers"
+>
+  <PageHero
+    eyebrow="Join us"
+    title="Practise the way it"
+    accent="should be done."
+    lead="We're always interested in hearing from physiotherapists and allied health professionals who care about doing the job properly — not just quickly."
+    crumbs={[{ label: 'Careers' }]}
+  />
+
+  <section class="bg-ivory section">
+    <div class="container-page">
+      <div class="max-w-2xl mb-10 reveal">
+        <h2 class="font-display font-extrabold text-forest text-3xl md:text-4xl">What we're about.</h2>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-5">
+        {values.map((v) => (
+          <div class="card card-hover p-7 reveal">
+            <h3 class="font-display font-bold text-lg text-forest">{v.t}</h3>
+            <p class="mt-2 text-sm text-charcoal/70">{v.d}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="card p-8 mt-8 reveal">
+        <h2 class="font-display font-bold text-2xl text-forest">No current vacancies listed</h2>
+        <p class="mt-2 text-charcoal/75 max-w-2xl">We don't have a specific role advertised right now, but we'd still love to hear from great clinicians. Send your CV and a short note about how you like to work.</p>
+        <a href={`mailto:${site.email}?subject=Careers enquiry`} class="btn btn-primary mt-6" data-magnetic data-ripple>Email us your CV</a>
+      </div>
+    </div>
+  </section>
+
+  <CTABand heading="Think you'd" accent="fit in?" sub="Get in touch — we read every message." />
+</Layout>

@@ -1,0 +1,43 @@
+---
+// APP-compliant cookie banner (Privacy Act 1988, not GDPR).
+// Accept All + Reject All equally prominent.
+---
+<div
+  class="fixed inset-x-3 bottom-3 z-[60] hidden md:max-w-xl md:left-5 md:right-auto"
+  data-cookie-banner
+  role="dialog"
+  aria-live="polite"
+  aria-label="Cookie notice"
+>
+  <div class="glass !bg-cream/95 shadow-2xl p-5 sm:p-6 border border-forest/15">
+    <p class="font-display font-bold text-forest text-lg mb-1">A quick note on cookies</p>
+    <p class="text-sm text-charcoal/75 leading-relaxed">
+      We use cookies to understand how our site is used and to improve your experience.
+      You can accept or reject non-essential cookies. We handle your information in line
+      with the Australian Privacy Principles under the Privacy Act 1988. See our
+      <a href="/privacy-policy" class="text-forest font-semibold underline underline-offset-2">Privacy Policy</a>.
+    </p>
+    <div class="mt-4 flex flex-col sm:flex-row gap-2.5">
+      <button type="button" class="btn btn-primary flex-1 !py-2.5 text-sm" data-cookie-accept>Accept all</button>
+      <button type="button" class="btn btn-outline flex-1 !py-2.5 text-sm" data-cookie-reject>Reject all</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const KEY = 'plx-cookie-consent';
+  const banner = document.querySelector('[data-cookie-banner]');
+  const show = () => banner?.classList.remove('hidden');
+  const hide = () => banner?.classList.add('hidden');
+  const set = (v: string) => { try { localStorage.setItem(KEY, v); } catch {} hide(); };
+
+  try {
+    if (!localStorage.getItem(KEY)) setTimeout(show, 900);
+  } catch { setTimeout(show, 900); }
+
+  document.querySelector('[data-cookie-accept]')?.addEventListener('click', () => set('all'));
+  document.querySelector('[data-cookie-reject]')?.addEventListener('click', () => set('essential'));
+  document.querySelectorAll('[data-cookie-settings]').forEach((b) =>
+    b.addEventListener('click', (e) => { e.preventDefault(); show(); })
+  );
+</script>

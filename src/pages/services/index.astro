@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABand from '../../components/CTABand.astro';
+import ServiceIcon from '../../components/ServiceIcon.astro';
+import { services, site } from '../../data/site';
+
+const fundingPages = [
+  { title: 'Insurance & Private Health', href: '/services/insurance-claims', desc: 'NIB Preferred Provider plus all major funds, with HICAPS on-the-spot claiming.' },
+  { title: 'Workers Compensation', href: '/services/workers-compensation', desc: 'WorkCover WA claims handled, paperwork included.' },
+  { title: 'Motor Vehicle Claims', href: '/services/motor-vehicle-claims', desc: 'ICWA / CTP claims and post-accident rehabilitation.' },
+];
+---
+
+<Layout
+  title="Services"
+  description="Physiotherapy, clinical reformer pilates, dry needling, manual therapy, pre/post-op rehabilitation, hydrotherapy, exercise rehab, remedial massage and podiatry in West Perth."
+  path="/services"
+>
+  <PageHero
+    eyebrow="What we treat with"
+    title="Real treatment."
+    accent="Real recovery."
+    lead="A diagnostic-first physiotherapy clinic in West Perth. Every plan is built around finding the real cause — then treating it with the right combination of approaches."
+    crumbs={[{ label: 'Services' }]}
+  />
+
+  <section class="bg-ivory section">
+    <div class="container-page grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {services.map((s) => (
+        <a href={`/services/${s.slug}`} class="group card card-hover p-7 flex flex-col reveal">
+          <span class="w-12 h-12 rounded-2xl bg-sage/25 text-forest grid place-items-center mb-4 transition-colors group-hover:bg-sage/40"><ServiceIcon name={s.icon}/></span>
+          <h2 class="font-display font-bold text-xl text-forest">{s.title}</h2>
+          <p class="mt-2 text-sm text-charcoal/70 flex-1">{s.short}</p>
+          <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-forest group-hover:gap-3 transition-all">Learn more <span aria-hidden="true">→</span></span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-cream section">
+    <div class="container-page">
+      <div class="max-w-2xl mb-8 reveal">
+        <p class="eyebrow text-forest mb-3">Funding & claims</p>
+        <h2 class="font-display font-extrabold text-forest text-3xl md:text-4xl">However you're <span class="accent">covered.</span></h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        {fundingPages.map((f) => (
+          <a href={f.href} class="group card card-hover p-7 reveal">
+            <h3 class="font-display font-bold text-lg text-forest">{f.title}</h3>
+            <p class="mt-2 text-sm text-charcoal/70">{f.desc}</p>
+            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-forest group-hover:gap-3 transition-all">Learn more <span aria-hidden="true">→</span></span>
+          </a>
+        ))}
+      </div>
+      <p class="mt-6 text-sm text-warmgrey reveal">
+        NDIS participants and DVA cardholders welcome — see our
+        <a href="/ndis" class="text-forest font-semibold underline underline-offset-2">NDIS</a> and
+        <a href="/dva" class="text-forest font-semibold underline underline-offset-2">DVA</a> pages.
+        See also <a href="/pricing-rebates" class="text-forest font-semibold underline underline-offset-2">pricing & rebates</a>.
+      </p>
+    </div>
+  </section>
+
+  <CTABand heading="Not sure where to" accent="start?" sub={`Book an initial assessment and Vincent will help you find the right path. Or call ${site.phoneDisplay}.`} />
+</Layout>
