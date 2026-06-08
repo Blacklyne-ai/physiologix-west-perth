@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import ServiceIcon from '../components/ServiceIcon.astro';
 import ReviewCard from '../components/ReviewCard.astro';
 import Marquee from '../components/Marquee.astro';
+import BadgeMarquee from '../components/BadgeMarquee.astro';
 import {
   site, services, conditions, team, reviews, reviewDisclaimer,
   stats, processSteps,
@@ -94,8 +95,13 @@ const description =
     </div>
   </section>
 
+  <!-- ============ 3b. BADGE MARQUEE ============ -->
+  <div class="mt-20 md:mt-28">
+    <BadgeMarquee />
+  </div>
+
   <!-- ============ 4. PULL QUOTE ============ -->
-  <section class="relative bg-night overflow-hidden mt-20 md:mt-28">
+  <section class="relative bg-night overflow-hidden">
     <div class="absolute inset-0 grain opacity-[0.05]" aria-hidden="true"></div>
     <div class="container-page section text-center relative">
       <blockquote class="max-w-4xl mx-auto reveal">
