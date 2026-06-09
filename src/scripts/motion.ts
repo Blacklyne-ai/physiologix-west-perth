@@ -48,12 +48,12 @@ function initReveal() {
 
 // ---- Magnetic buttons ----
 function initMagnetic() {
-  if (reduced) return;
+  if (reduced || !finePointer) return;
   document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((el) => {
     el.addEventListener('mousemove', (e) => {
       const r = el.getBoundingClientRect();
-      const x = (e.clientX - r.left - r.width / 2) * 0.1;
-      const y = (e.clientY - r.top - r.height / 2) * 0.1;
+      const x = (e.clientX - r.left - r.width / 2) * 0.16;
+      const y = (e.clientY - r.top - r.height / 2) * 0.16;
       el.style.transform = `translate(${x}px, ${y}px)`;
     });
     el.addEventListener('mouseleave', () => { el.style.transform = ''; });
@@ -161,6 +161,9 @@ function initCursor() {
   const ring = document.createElement('div');
   const dot = document.createElement('div');
   ring.className = 'cursor-ring';
+  const label = document.createElement('span');
+  label.className = 'cursor-label';
+  ring.appendChild(label);
   dot.className = 'cursor-dot';
   document.body.append(ring, dot);
   document.body.classList.add('has-cursor');
@@ -184,19 +187,48 @@ function initCursor() {
 
   const interactive = 'a, button, [data-magnetic], [data-tilt], input, textarea, select, summary, label, [role="button"]';
   document.addEventListener('mouseover', (e) => {
-    if ((e.target as Element).closest?.(interactive)) ring.classList.add('is-hover');
+    const t = e.target as Element;
+    if (t.closest?.(interactive)) ring.classList.add('is-hover');
+    const labelled = t.closest?.('[data-cursor]') as HTMLElement | null;
+    if (labelled) {
+      label.textContent = labelled.dataset.cursor || '';
+      ring.classList.add('is-label');
+    }
   });
   document.addEventListener('mouseout', (e) => {
-    if ((e.target as Element).closest?.(interactive)) ring.classList.remove('is-hover');
+    const t = e.target as Element;
+    if (t.closest?.(interactive)) ring.classList.remove('is-hover');
+    if (t.closest?.('[data-cursor]')) ring.classList.remove('is-label');
   });
   window.addEventListener('mouseleave', () => { ring.style.opacity = '0'; dot.style.opacity = '0'; });
   window.addEventListener('mouseenter', () => { ring.style.opacity = '1'; dot.style.opacity = '1'; });
 }
 
+// ---- Hero mouse-parallax (uses `translate` property so it composes with transforms) ----
+function initHeroParallax() {
+  if (reduced || !finePointer) return;
+  const hero = document.querySelector<HTMLElement>('[data-hero-parallax]');
+  if (!hero) return;
+  const layers = hero.querySelectorAll<HTMLElement>('[data-depth]');
+  if (!layers.length) return;
+  hero.addEventListener('mousemove', (e) => {
+    const r = hero.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    layers.forEach((l) => {
+      const d = parseFloat(l.dataset.depth || '12');
+      l.style.translate = `${-x * d}px ${-y * d}px`;
+    });
+  });
+  hero.addEventListener('mouseleave', () => {
+    layers.forEach((l) => { l.style.translate = ''; });
+  });
+}
+
 // ---- 3D tilt on cards ----
 function initTilt() {
   if (reduced || !finePointer) return;
-  const max = 6;
+  const max = 8;
   document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
     el.addEventListener('mousemove', (e) => {
       const r = el.getBoundingClientRect();
@@ -257,6 +289,7 @@ function init() {
   initTilt();
   initSpotlight();
   initProgress();
+  initHeroParallax();
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

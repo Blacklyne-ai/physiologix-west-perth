@@ -431,3 +431,56 @@ body.has-cursor, body.has-cursor * { cursor: none !important; }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: clip; }
+
+/* ---- Hero word-by-word reveal ---- */
+.hero-reveal { opacity: 1 !important; animation: none !important; }
+.hero-reveal .word {
+  display: inline-block; overflow: hidden; vertical-align: top;
+  padding-bottom: 0.14em; margin-bottom: -0.14em; margin-right: 0.2em;
+}
+.hero-reveal .word > span {
+  display: inline-block; transform: translateY(118%);
+  animation: word-rise 1s var(--ease-out-expo) forwards;
+}
+@keyframes word-rise { to { transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal .word > span { transform: none; animation: none; }
+}
+
+/* ---- Animated SVG line-draw ---- */
+.draw-path {
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  animation: draw-in 2.8s var(--ease-out-expo) 0.35s forwards;
+}
+@keyframes draw-in { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .draw-path { stroke-dashoffset: 0; animation: none; } }
+
+/* ---- Button shine sweep ---- */
+.btn::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(120deg, transparent 36%,
+              color-mix(in srgb, #ffffff 32%, transparent) 50%, transparent 64%);
+  transform: translateX(-130%); transition: transform 0.7s var(--ease-out-expo);
+}
+.btn:hover::after { transform: translateX(130%); }
+@media (prefers-reduced-motion: reduce) { .btn::after { display: none; } }
+
+/* ---- Ken Burns slow zoom (uses `scale` so it composes with transforms) ---- */
+.kenburns { animation: kenburns 22s ease-in-out infinite alternate; }
+@keyframes kenburns { from { scale: 1; } to { scale: 1.09; } }
+@media (prefers-reduced-motion: reduce) { .kenburns { animation: none; } }
+
+/* ---- Cursor contextual label ---- */
+.cursor-ring { display: grid; place-items: center; }
+.cursor-label {
+  font-family: var(--font-body); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.02em; color: var(--color-night); opacity: 0;
+  white-space: nowrap; transition: opacity 0.2s; transform: translateY(0.5px);
+}
+.cursor-ring.is-label {
+  width: 76px; height: 76px;
+  background: color-mix(in srgb, var(--color-sage) 88%, transparent);
+  border-color: transparent;
+}
+.cursor-ring.is-label .cursor-label { opacity: 1; }
+.cursor-ring.is-label ~ .cursor-dot { opacity: 0; }
