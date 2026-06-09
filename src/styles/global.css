@@ -329,3 +329,105 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
   }
 }
+
+/* ============================================================
+   Premium interactions — aurora, cursor, tilt, spotlight, progress
+   (unlayered for reliable cascade above Tailwind utilities)
+   ============================================================ */
+
+/* ---- Aurora drifting gradient blobs ---- */
+.aurora { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: 0.5;
+  will-change: transform;
+  mix-blend-mode: multiply;
+}
+.blob-sage   { background: radial-gradient(circle at 35% 35%, #9cc084, transparent 70%); }
+.blob-soft   { background: radial-gradient(circle at 35% 35%, #b9d4a7, transparent 70%); }
+.blob-forest { background: radial-gradient(circle at 35% 35%, #2a3d33, transparent 70%); }
+.aurora-dark .blob { mix-blend-mode: screen; opacity: 0.4; filter: blur(80px); }
+@keyframes drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(7%, -9%, 0) scale(1.12); }
+  66% { transform: translate3d(-6%, 6%, 0) scale(0.92); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-9%, 7%, 0) scale(1.16); }
+}
+.blob-a { animation: drift-a 21s ease-in-out infinite; }
+.blob-b { animation: drift-b 26s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .blob { animation: none !important; } }
+
+/* ---- Custom cursor (soft sage, calm lag) ---- */
+.cursor-ring, .cursor-dot {
+  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+  border-radius: 50%; will-change: transform; mix-blend-mode: normal;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1.5px solid color-mix(in srgb, var(--color-forest) 50%, transparent);
+  background: transparent;
+  transition: width .28s var(--ease-out-expo), height .28s var(--ease-out-expo),
+              background-color .28s, border-color .28s, opacity .3s;
+}
+.cursor-dot { width: 6px; height: 6px; background: var(--color-forest); transition: opacity .3s; }
+.cursor-ring.is-hover {
+  width: 66px; height: 66px;
+  background: color-mix(in srgb, var(--color-sage) 20%, transparent);
+  border-color: color-mix(in srgb, var(--color-sage) 75%, transparent);
+}
+.cursor-ring.is-down { transform-box: fill-box; }
+body.has-cursor, body.has-cursor * { cursor: none !important; }
+@media (hover: none), (pointer: coarse) {
+  .cursor-ring, .cursor-dot { display: none !important; }
+}
+
+/* ---- Scroll progress bar ---- */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+  transform: scaleX(0); transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--color-sage), var(--color-forest));
+  z-index: 70; will-change: transform;
+}
+
+/* ---- 3D tilt ---- */
+[data-tilt] { will-change: transform; transform-style: preserve-3d; }
+
+/* ---- Cursor spotlight on dark sections ---- */
+.spotlight-layer {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0; transition: opacity .5s var(--ease-out-expo);
+  background: radial-gradient(460px circle at var(--mx, 50%) var(--my, 50%),
+              color-mix(in srgb, var(--color-sage) 22%, transparent), transparent 62%);
+}
+.spotlight-on .spotlight-layer { opacity: 1; }
+
+/* ---- Frosted glass on dark surfaces ---- */
+.glass-dark {
+  background: color-mix(in srgb, var(--color-night) 30%, transparent);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  border: 1px solid color-mix(in srgb, var(--color-sage) 28%, transparent);
+}
+
+/* ---- Shimmer on accent words ---- */
+.shimmer {
+  background: linear-gradient(100deg,
+    var(--color-sage) 28%,
+    color-mix(in srgb, var(--color-sage) 45%, #ffffff) 50%,
+    var(--color-sage) 72%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shimmer 7s linear infinite;
+}
+@keyframes shimmer { to { background-position: -220% 0; } }
+@media (prefers-reduced-motion: reduce) { .shimmer { animation: none; } }
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: clip; }

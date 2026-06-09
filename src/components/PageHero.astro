@@ -13,11 +13,14 @@ const { eyebrow, title, accent, lead, crumbs, tone = 'cream' } = Astro.props;
 const bg = tone === 'cream' ? 'bg-cream' : 'bg-ivory';
 ---
 <section class={`${bg} relative overflow-hidden pt-32 md:pt-40 pb-12 md:pb-16 border-b border-forest/10`}>
+  <div class="aurora" aria-hidden="true">
+    <div class="blob blob-sage blob-a" style="width:34rem;height:34rem;top:-14rem;right:-10rem;"></div>
+  </div>
   <!-- decorative sage line -->
-  <svg class="absolute -top-10 right-0 w-[40rem] max-w-[60vw] opacity-[0.07] text-sage pointer-events-none" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+  <svg class="absolute -top-10 right-0 w-[40rem] max-w-[60vw] opacity-[0.07] text-sage pointer-events-none z-[1]" viewBox="0 0 400 400" fill="none" aria-hidden="true">
     <path d="M-20 320 C120 200 200 360 420 120" stroke="currentColor" stroke-width="44" stroke-linecap="round"/>
   </svg>
-  <div class="container-page relative">
+  <div class="container-page relative z-10">
     {crumbs && <div class="mb-6"><Breadcrumbs items={crumbs} /></div>}
     {eyebrow && <p class="eyebrow text-forest mb-4 reveal">{eyebrow}</p>}
     <h1 class="font-display font-extrabold text-forest text-4xl sm:text-5xl md:text-6xl lg:text-7xl max-w-4xl reveal">

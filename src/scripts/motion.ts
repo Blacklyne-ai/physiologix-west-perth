@@ -1,7 +1,11 @@
-// Global motion: scroll reveal, magnetic buttons, ripple, stat count-up.
-// All respect prefers-reduced-motion.
+// Global motion: smooth scroll, reveal, magnetic, ripple, counters,
+// custom cursor, 3D tilt, cursor spotlight, scroll progress.
+// All respect prefers-reduced-motion and pointer capability.
+
+import Lenis from 'lenis';
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 // ---- Scroll reveal (Intersection Observer, staggered siblings) ----
 function initReveal() {
@@ -124,12 +128,135 @@ function initParallax() {
   window.addEventListener('scroll', onScroll, { passive: true });
 }
 
+// ---- Lenis smooth scroll ----
+function initSmoothScroll() {
+  if (reduced) return;
+  const lenis = new Lenis({
+    duration: 1.15,
+    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+    wheelMultiplier: 1,
+    touchMultiplier: 1.6,
+  });
+  function raf(time: number) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+  // In-page anchor links route through Lenis
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id && id.length > 1) {
+        const t = document.querySelector(id);
+        if (t) { e.preventDefault(); lenis.scrollTo(t as HTMLElement, { offset: -90 }); }
+      }
+    });
+  });
+}
+
+// ---- Custom cursor ----
+function initCursor() {
+  if (!finePointer) return;
+  const ring = document.createElement('div');
+  const dot = document.createElement('div');
+  ring.className = 'cursor-ring';
+  dot.className = 'cursor-dot';
+  document.body.append(ring, dot);
+  document.body.classList.add('has-cursor');
+
+  let rx = window.innerWidth / 2, ry = window.innerHeight / 2;
+  let mx = rx, my = ry;
+  const lerp = reduced ? 1 : 0.2;
+
+  window.addEventListener('mousemove', (e) => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+  }, { passive: true });
+
+  const loop = () => {
+    rx += (mx - rx) * lerp;
+    ry += (my - ry) * lerp;
+    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+    requestAnimationFrame(loop);
+  };
+  loop();
+
+  const interactive = 'a, button, [data-magnetic], [data-tilt], input, textarea, select, summary, label, [role="button"]';
+  document.addEventListener('mouseover', (e) => {
+    if ((e.target as Element).closest?.(interactive)) ring.classList.add('is-hover');
+  });
+  document.addEventListener('mouseout', (e) => {
+    if ((e.target as Element).closest?.(interactive)) ring.classList.remove('is-hover');
+  });
+  window.addEventListener('mouseleave', () => { ring.style.opacity = '0'; dot.style.opacity = '0'; });
+  window.addEventListener('mouseenter', () => { ring.style.opacity = '1'; dot.style.opacity = '1'; });
+}
+
+// ---- 3D tilt on cards ----
+function initTilt() {
+  if (reduced || !finePointer) return;
+  const max = 6;
+  document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
+    el.addEventListener('mousemove', (e) => {
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      el.style.transition = 'transform 0.1s linear';
+      el.style.transform = `perspective(900px) rotateX(${-py * max}deg) rotateY(${px * max}deg) translateY(-5px)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transition = 'transform 0.55s var(--ease-out-expo)';
+      el.style.transform = '';
+    });
+  });
+}
+
+// ---- Cursor spotlight on dark sections ----
+function initSpotlight() {
+  if (!finePointer) return;
+  document.querySelectorAll<HTMLElement>('[data-spotlight]').forEach((sec) => {
+    const layer = document.createElement('div');
+    layer.className = 'spotlight-layer';
+    layer.setAttribute('aria-hidden', 'true');
+    sec.prepend(layer);
+    sec.addEventListener('mousemove', (e) => {
+      const r = sec.getBoundingClientRect();
+      sec.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      sec.style.setProperty('--my', `${e.clientY - r.top}px`);
+      sec.classList.add('spotlight-on');
+    });
+    sec.addEventListener('mouseleave', () => sec.classList.remove('spotlight-on'));
+  });
+}
+
+// ---- Scroll progress bar ----
+function initProgress() {
+  const bar = document.createElement('div');
+  bar.className = 'scroll-progress';
+  bar.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(bar);
+  const update = () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const p = h > 0 ? Math.min(window.scrollY / h, 1) : 0;
+    bar.style.transform = `scaleX(${p})`;
+  };
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+}
+
 function init() {
+  initSmoothScroll();
   initReveal();
   initMagnetic();
   initRipple();
   initCounters();
   initParallax();
+  initCursor();
+  initTilt();
+  initSpotlight();
+  initProgress();
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

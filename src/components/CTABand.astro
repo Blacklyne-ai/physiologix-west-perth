@@ -14,9 +14,12 @@ const {
 } = Astro.props;
 const bg = tone === 'night' ? 'bg-night' : 'bg-forest';
 ---
-<section class={`${bg} relative overflow-hidden`}>
+<section class={`${bg} relative overflow-hidden`} data-spotlight>
+  <div class="aurora aurora-dark" aria-hidden="true">
+    <div class="blob blob-sage blob-a" style="width:32rem;height:32rem;top:-12rem;left:50%;transform:translateX(-50%);"></div>
+  </div>
   <div class="absolute inset-0 grain opacity-[0.04]" aria-hidden="true"></div>
-  <div class="container-page section relative text-center">
+  <div class="container-page section relative z-10 text-center">
     <h2 class="font-display font-extrabold text-cream text-3xl sm:text-4xl md:text-5xl max-w-3xl mx-auto reveal">
       {heading}{accent && <> <span class="accent">{accent}</span></>}
     </h2>
