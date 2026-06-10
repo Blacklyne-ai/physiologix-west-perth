@@ -13,10 +13,8 @@ export const site = {
     'Founder-led physiotherapy, reformer pilates, dry needling and rehabilitation in West Perth.',
   phoneDisplay: '0450 075 955',
   phoneHref: '+61450075955',
-  // PLACEHOLDER — currently myphysiologix@outlook.com (unprofessional).
-  // Recommend bookings@physiologix.com.au
   email: 'bookings@physiologix.com.au',
-  emailPlaceholder: true,
+  abn: '', // set when provided — footer shows it only when non-empty
   booking: 'https://physiologix.cliniko.com/bookings',
   reviewsUrl: 'https://www.google.com/maps/search/physiologix+west+perth',
   rating: '5.0',
@@ -431,10 +429,9 @@ export const team: Member[] = [
     role: 'Podiatrist',
     short: 'Foot and lower limb assessment, orthotics and sports podiatry.',
     bio: [
-      'Mohangi provides podiatry care covering foot and lower limb assessment, custom orthotics and sports podiatry.',
-      'Please confirm current availability with the clinic when booking. (Status to be confirmed by client — full team member or affiliated/visiting.)',
+      'Mohangi provides podiatry care at PhysioLogix, covering foot and lower limb assessment, custom orthotics and sports podiatry.',
+      'She works closely with the physiotherapy team, so issues further up the chain — knees, hips and lower back — are considered alongside what is happening at your feet.',
     ],
-    placeholder: true,
   },
 ];
 
@@ -498,7 +495,7 @@ export const faqs = [
   },
   {
     q: 'Do you see NDIS and DVA patients?',
-    a: 'We welcome NDIS participants and DVA cardholders. Please contact us to confirm registration status and the claiming process for your situation.',
+    a: 'Yes. We support NDIS participants (NDIA-managed, plan-managed and self-managed) and welcome DVA cardholders. Get in touch and we will walk you through the claiming process for your situation.',
   },
   {
     q: 'What is clinical reformer pilates, and how is it different from a studio class?',
@@ -510,7 +507,7 @@ export const faqs = [
   },
   {
     q: 'Where are you located and is there parking?',
-    a: 'We are at 6/567 Newcastle St, West Perth WA 6005, on the Newcastle Street artery between West Perth and Northbridge. Parking details to be confirmed — please ask when you book.',
+    a: 'We are at 6/567 Newcastle St, West Perth WA 6005, on the Newcastle Street artery between West Perth and Northbridge. There is on-street parking nearby, and we are a short walk from bus routes along Newcastle Street.',
   },
 ];
 

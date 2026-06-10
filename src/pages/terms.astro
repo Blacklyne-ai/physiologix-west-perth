@@ -6,7 +6,7 @@ import { site } from '../data/site';
 const sections = [
   { h: 'About these terms', b: [`These terms apply to the use of our website and the physiotherapy and related services provided by ${site.legalName}. By booking or attending an appointment, you agree to these terms.`] },
   { h: 'Appointments and bookings', b: ['Appointments can be booked online via our Cliniko booking system or by phone. Please arrive a few minutes early for your first appointment and bring any relevant referrals, scans or health fund details.'] },
-  { h: 'Cancellation policy', b: ['We ask for reasonable notice if you need to change or cancel an appointment, so we can offer the time to another patient. A cancellation fee may apply for late cancellations or missed appointments. Specific notice periods and fees to be confirmed by the clinic.'] },
+  { h: 'Cancellation policy', b: ['We ask for reasonable notice if you need to change or cancel an appointment, so we can offer the time to another patient. A cancellation fee may apply for late cancellations or missed appointments. Please contact us if you need to reschedule.'] },
   { h: 'Fees and payment', b: ['Fees are payable at the time of your appointment unless other arrangements (such as approved WorkCover, ICWA, NDIS or DVA claims) are in place. Health fund rebates can be claimed on the spot via HICAPS where applicable.'] },
   { h: 'Your care', b: ['Our physiotherapists provide care based on professional assessment and current evidence. Individual results vary, and outcomes depend on factors including your condition, history and adherence to your treatment plan. Information on this website is general in nature and is not a substitute for individual professional advice.'] },
   { h: 'Website content', b: ['Content on this website is provided for general information only. While we take care to keep it accurate, we make no warranties about its completeness or currency. The website may contain links to third-party sites which we do not control.'] },
@@ -20,7 +20,7 @@ const sections = [
   <PageHero eyebrow="Legal" title="Terms of" accent="Service" lead="The terms that apply to our website and clinical services, including our cancellation policy." crumbs={[{ label: 'Terms' }]} />
   <section class="bg-ivory section">
     <div class="container-page max-w-3xl">
-      <p class="text-sm text-warmgrey mb-8 reveal">Last updated: June 2026. ABN to be confirmed.</p>
+      <p class="text-sm text-warmgrey mb-8 reveal">Last updated: June 2026.</p>
       <div class="space-y-8">
         {sections.map((s) => (
           <div class="reveal">

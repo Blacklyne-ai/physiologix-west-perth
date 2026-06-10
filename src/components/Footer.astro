@@ -104,7 +104,7 @@ const year = 2026;
 
     <!-- Bottom -->
     <div class="pt-8 border-t border-cream/10 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center text-xs text-cream/50">
-      <p>© {year} {site.legalName}. ABN [to be confirmed]. AHPRA Registered Physiotherapy Practice.</p>
+      <p>© {year} {site.legalName}.{site.abn ? ` ABN ${site.abn}.` : ''} AHPRA Registered Physiotherapy Practice.</p>
       <div class="flex flex-wrap gap-4">
         <a href="/privacy-policy" class="hover:text-sage">Privacy Policy</a>
         <a href="/terms" class="hover:text-sage">Terms</a>

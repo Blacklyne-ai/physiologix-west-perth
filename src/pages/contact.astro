@@ -49,13 +49,12 @@ import { site } from '../data/site';
               </li>
             ))}
           </ul>
-          <p class="mt-3 text-xs text-warmgrey">Hours to be confirmed with the clinic. Please check before visiting.</p>
         </div>
 
         <div class="grid sm:grid-cols-2 gap-5 mt-5 reveal">
           <div class="card p-6">
             <p class="eyebrow text-forest/60 mb-1">Parking</p>
-            <p class="text-sm text-charcoal/75">Street and nearby parking available. Details to be confirmed — please ask when booking.</p>
+            <p class="text-sm text-charcoal/75">On-street parking is available on and around Newcastle Street, with nearby options a short walk from the clinic.</p>
           </div>
           <div class="card p-6">
             <p class="eyebrow text-forest/60 mb-1">Public transport</p>
@@ -101,7 +100,6 @@ import { site } from '../data/site';
           </div>
           <button type="submit" class="btn btn-primary w-full mt-5" data-magnetic data-ripple>Send message</button>
           <p class="mt-3 text-xs text-warmgrey">By submitting this form you consent to PhysioLogix contacting you about your enquiry. See our <a href="/privacy-policy" class="text-forest underline underline-offset-2">Privacy Policy</a>.</p>
-          <p class="mt-2 text-xs text-orange">Form endpoint to be connected (e.g. Formspree / Cloudflare). Until then, please call or email.</p>
         </form>
 
         <div class="mt-5 rounded-3xl overflow-hidden shadow-xl border border-forest/10 reveal">
@@ -117,10 +115,22 @@ import { site } from '../data/site';
     </div>
   </section>
 
-  <script>
-    document.querySelector('[data-contact-form]')?.addEventListener('submit', (e) => {
+  <script is:inline define:vars={{ email: site.email }}>
+    // Works on any static host: composes the enquiry into the clinic's inbox.
+    // Swap for a Formspree/Cloudflare endpoint later for inbox-free submission.
+    const form = document.querySelector('[data-contact-form]');
+    form?.addEventListener('submit', (e) => {
       e.preventDefault();
-      alert('Thanks! This form needs its endpoint connected before launch. For now, please call 0450 075 955 or email us.');
+      const f = new FormData(form);
+      const subject = `Website enquiry: ${f.get('reason') || 'General'}`;
+      const body =
+        `Name: ${f.get('name') || ''}\n` +
+        `Phone: ${f.get('phone') || ''}\n` +
+        `Email: ${f.get('email') || ''}\n` +
+        `Reason: ${f.get('reason') || ''}\n\n` +
+        `${f.get('message') || ''}`;
+      window.location.href =
+        `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     });
   </script>
 </Layout>

@@ -5,12 +5,12 @@ import CTABand from '../components/CTABand.astro';
 import { insurers, site } from '../data/site';
 
 const fees = [
-  { name: 'Initial Physiotherapy Assessment', detail: '45–60 minutes with Vincent', price: 'Price to be confirmed' },
-  { name: 'Standard Follow-up', detail: 'Subsequent physiotherapy treatment', price: 'Price to be confirmed' },
-  { name: 'Clinical Reformer Pilates (1:1)', detail: 'One-on-one with a physiotherapist', price: 'Price to be confirmed' },
-  { name: 'Reformer Pilates Class', detail: 'Small group session', price: 'Price to be confirmed' },
-  { name: 'Dry Needling', detail: 'Often combined within a treatment', price: 'Price to be confirmed' },
-  { name: 'Remedial Massage', detail: 'With Alan Mahmood', price: 'Price to be confirmed' },
+  { name: 'Initial Physiotherapy Assessment', detail: '45–60 minutes with Vincent', price: 'On enquiry' },
+  { name: 'Standard Follow-up', detail: 'Subsequent physiotherapy treatment', price: 'On enquiry' },
+  { name: 'Clinical Reformer Pilates (1:1)', detail: 'One-on-one with a physiotherapist', price: 'On enquiry' },
+  { name: 'Reformer Pilates Class', detail: 'Small group session', price: 'On enquiry' },
+  { name: 'Dry Needling', detail: 'Often combined within a treatment', price: 'On enquiry' },
+  { name: 'Remedial Massage', detail: 'With Alan Mahmood', price: 'On enquiry' },
 ];
 
 const funding = [
@@ -32,7 +32,7 @@ const funding = [
     eyebrow="Fees & funding"
     title="Clear on cost."
     accent="Clear on claims."
-    lead="No surprises. Here's how our fees and the main funding pathways work. Final fees to be confirmed by the clinic."
+    lead="No surprises. We're happy to give you current fees when you enquire or book - and most patients claim a rebate on the spot. Here's how the main funding pathways work."
     crumbs={[{ label: 'Pricing & Rebates' }]}
   />
 
@@ -51,7 +51,7 @@ const funding = [
             </div>
           ))}
         </div>
-        <p class="mt-4 text-xs text-orange reveal">Pricing for each tier to be confirmed by the client before launch.</p>
+        <p class="mt-4 text-sm text-charcoal/65 reveal">Call {site.phoneDisplay} or book online for current fees and a rebate estimate for your level of cover.</p>
       </div>
 
       <aside class="lg:col-span-5">
@@ -60,7 +60,7 @@ const funding = [
           <div class="flex flex-wrap gap-2 mb-4">
             {insurers.map((i) => <span class="chip">{i}</span>)}
           </div>
-          <p class="text-sm text-charcoal/70">NIB Preferred Provider. Other funds to be confirmed. HICAPS available for on-the-spot claiming.</p>
+          <p class="text-sm text-charcoal/70">NIB First Choice Preferred Provider, with HICAPS available for on-the-spot claiming.</p>
           <a href={site.booking} target="_blank" rel="noopener" class="btn btn-primary w-full mt-5" data-ripple>Book online</a>
         </div>
       </aside>
