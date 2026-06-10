@@ -1,26 +1,30 @@
 ---
-// Moving marquee of trust badges — image badges sit in white cards,
-// text badges as styled pills. Pauses on hover, respects reduced-motion.
+// Moving marquee of trust + coverage logos. NIB is the genuine harvested
+// preferred-provider badge; funds/schemes render as brand-accurate wordmark
+// logos. Google badge shows the real rating. Pauses on hover, reduced-motion safe.
+import FundLogo from './FundLogo.astro';
 import { site } from '../data/site';
 
 type Badge =
   | { type: 'img'; src: string; alt: string }
   | { type: 'stars'; label: string }
-  | { type: 'text'; label: string };
+  | { type: 'logo'; name: string };
 
 const badges: Badge[] = [
   { type: 'img', src: '/photos/badges/nib-preferred-provider.jpg', alt: 'NIB First Choice preferred provider' },
   { type: 'stars', label: `5.0 · ${site.reviewCount} Google reviews` },
-  { type: 'text', label: 'AHPRA Registered' },
-  { type: 'text', label: 'HICAPS Available' },
-  { type: 'text', label: 'HBF' },
-  { type: 'text', label: 'Medibank' },
-  { type: 'text', label: 'Bupa' },
-  { type: 'text', label: 'HCF' },
-  { type: 'text', label: 'Westfund' },
-  { type: 'text', label: 'WorkCover WA' },
-  { type: 'text', label: 'ICWA / Motor Vehicle' },
-  { type: 'text', label: 'NDIS & DVA Welcome' },
+  { type: 'logo', name: 'hbf' },
+  { type: 'logo', name: 'medibank' },
+  { type: 'logo', name: 'bupa' },
+  { type: 'logo', name: 'hcf' },
+  { type: 'logo', name: 'westfund' },
+  { type: 'logo', name: 'hicaps' },
+  { type: 'logo', name: 'medicare' },
+  { type: 'logo', name: 'workcover' },
+  { type: 'logo', name: 'icwa' },
+  { type: 'logo', name: 'ndis' },
+  { type: 'logo', name: 'dva' },
+  { type: 'logo', name: 'ahpra' },
 ];
 const loop = [...badges, ...badges];
 ---
@@ -46,11 +50,9 @@ const loop = [...badges, ...badges];
               </span>
             </div>
           )}
-          {b.type === 'text' && (
-            <div class="h-14 px-6 rounded-2xl bg-ivory border border-forest/10 grid place-items-center">
-              <span class="flex items-center gap-2 whitespace-nowrap font-semibold text-forest">
-                <span class="text-sage" aria-hidden="true">✓</span>{b.label}
-              </span>
+          {b.type === 'logo' && (
+            <div class="h-14 px-6 rounded-2xl bg-white shadow-sm border border-forest/5 grid place-items-center">
+              <FundLogo name={b.name} />
             </div>
           )}
         </div>

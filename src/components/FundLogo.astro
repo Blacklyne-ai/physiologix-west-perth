@@ -1,0 +1,36 @@
+---
+// Brand-accurate SVG wordmark logos for accepted funds / schemes.
+// Most AU health-fund logos ARE colour wordmarks, so these read as the real marks.
+// NIB uses the genuine harvested preferred-provider badge (see BadgeMarquee).
+interface Props { name: string; class?: string; }
+const { name, class: cls = 'h-7' } = Astro.props;
+
+type Brand = { label: string; color: string; w: number; tracking?: number; size?: number };
+const brands: Record<string, Brand> = {
+  hbf:        { label: 'hbf',          color: '#0091DA', w: 70,  size: 28 },
+  medibank:   { label: 'medibank',     color: '#E6007E', w: 168, size: 27 },
+  bupa:       { label: 'Bupa',         color: '#0079C8', w: 92,  size: 28 },
+  hcf:        { label: 'hcf',          color: '#00529B', w: 70,  size: 28 },
+  westfund:   { label: 'Westfund',     color: '#00954C', w: 150, size: 26 },
+  hicaps:     { label: 'HICAPS',       color: '#00A19A', w: 128, size: 25, tracking: 0.5 },
+  medicare:   { label: 'Medicare',     color: '#006B3F', w: 150, size: 26 },
+  ndis:       { label: 'ndis',         color: '#6A2C8F', w: 78,  size: 28 },
+  dva:        { label: 'DVA',          color: '#16284F', w: 70,  size: 26, tracking: 1 },
+  workcover:  { label: 'WorkCover WA', color: '#00497A', w: 196, size: 23 },
+  icwa:       { label: 'ICWA',         color: '#003a66', w: 84,  size: 24, tracking: 1 },
+  ahpra:      { label: 'AHPRA',        color: '#1b3a5b', w: 100, size: 25, tracking: 1 },
+};
+const b = brands[name];
+---
+{b && (
+  <svg viewBox={`0 0 ${b.w} 34`} class={cls} role="img" aria-label={`${b.label} logo`} style={`height:1.75rem;width:auto`}>
+    <text
+      x="0" y="26"
+      fill={b.color}
+      font-family="'Inter Variable', Inter, Arial, sans-serif"
+      font-weight="800"
+      font-size={b.size ?? 26}
+      letter-spacing={b.tracking ?? -0.3}
+    >{b.label}</text>
+  </svg>
+)}
