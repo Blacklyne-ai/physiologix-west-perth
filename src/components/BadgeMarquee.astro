@@ -32,6 +32,7 @@ const loop = [...badges, ...badges];
 <section class="bg-cream border-y border-forest/10 py-6" aria-label="Accreditations and accepted insurers">
   <h2 class="sr-only">Accreditations and accepted insurers</h2>
   <div class="marquee overflow-hidden">
+    <div class="velocity-skew" data-velocity>
     <div class="marquee-track items-center gap-4">
       {loop.map((b) => (
         <div class="shrink-0">
@@ -57,6 +58,7 @@ const loop = [...badges, ...badges];
           )}
         </div>
       ))}
+    </div>
     </div>
   </div>
 </section>

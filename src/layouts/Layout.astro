@@ -32,6 +32,47 @@ const props = Astro.props;
     <SEO {...props} />
   </head>
   <body>
+    <!-- Branded intro (first visit of session only) -->
+    <div data-preloader class="preloader" aria-hidden="true">
+      <div class="preloader-inner">
+        <span class="preloader-word font-display">PHYSIOLOGI<span class="text-sage">X</span></span>
+        <span class="preloader-tag font-display italic">Physiotherapy at the Speed of Life</span>
+        <div class="preloader-rail"><span data-pre-bar class="preloader-bar"></span></div>
+        <span data-pre-count class="preloader-count tnum">0</span>
+      </div>
+    </div>
+    <script is:inline>
+      (() => {
+        const pre = document.querySelector('[data-preloader]');
+        if (!pre) return;
+        const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let seen = false;
+        try { seen = sessionStorage.getItem('plx-intro') === '1'; } catch (e) {}
+        if (seen || reduced) { pre.remove(); return; }
+        try { sessionStorage.setItem('plx-intro', '1'); } catch (e) {}
+        document.documentElement.classList.add('preloading');
+        const bar = pre.querySelector('[data-pre-bar]');
+        const count = pre.querySelector('[data-pre-count]');
+        const dur = 1250, t0 = performance.now();
+        let finished = false;
+        const done = () => {
+          if (finished) return; finished = true;
+          pre.classList.add('is-done');
+          document.documentElement.classList.remove('preloading');
+          setTimeout(() => pre.remove(), 1000);
+          window.dispatchEvent(new Event('plx:intro-done'));
+        };
+        const tick = (now) => {
+          const p = Math.min((now - t0) / dur, 1);
+          if (bar) bar.style.transform = 'scaleX(' + p + ')';
+          if (count) count.textContent = Math.round(p * 100);
+          if (p < 1) requestAnimationFrame(tick); else done();
+        };
+        requestAnimationFrame(tick);
+        setTimeout(() => { if (document.body.contains(pre)) done(); }, 3800);
+      })();
+    </script>
+
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-full focus:bg-forest focus:text-cream">Skip to main content</a>
     <Header />
     <main id="main">

@@ -1,0 +1,41 @@
+---
+import { processSteps } from '../data/site';
+---
+<section class="bg-cream pin-wrap md:h-[330vh]" data-pin>
+  <div class="pin-stage">
+    <div class="container-page w-full">
+      <div class="grid md:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <!-- Left: heading + progress nav -->
+        <div class="md:col-span-4">
+          <p class="eyebrow text-forest mb-4 reveal">What to expect</p>
+          <h2 class="font-display text-forest text-4xl md:text-5xl mb-8 reveal">Your first <span class="accent">visit.</span></h2>
+          <div class="flex gap-5">
+            <div class="pin-rail w-px bg-forest/15 relative shrink-0 hidden md:block" style="height:11rem">
+              <div class="pin-rail-fill absolute top-0 left-0 w-full bg-sage" data-pin-fill style="height:100%;transform:scaleY(0)"></div>
+            </div>
+            <ul class="space-y-3" data-pin-nav>
+              {processSteps.map((s, i) => (
+                <li class:list={['text-sm font-semibold', i === 0 && 'is-active']} data-pin-dot={i}>
+                  <span class="tnum">{s.n}</span> · {s.title}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right: steps (pinned cross-fade on desktop, stacked on mobile) -->
+        <div class="md:col-span-8 relative md:h-[58vh] mt-10 md:mt-0 space-y-12 md:space-y-0">
+          {processSteps.map((s, i) => (
+            <div class:list={['pin-step', i === 0 && 'is-active']} data-pin-step={i}>
+              <div class="max-w-xl">
+                <p class="pin-num font-display text-sage text-[5.5rem] md:text-[10rem]">{s.n}</p>
+                <h3 class="font-display text-forest text-3xl md:text-4xl mt-2">{s.title}</h3>
+                <p class="text-charcoal/75 text-lg mt-4 leading-relaxed">{s.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

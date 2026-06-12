@@ -143,6 +143,16 @@ function initSmoothScroll() {
     requestAnimationFrame(raf);
   }
   requestAnimationFrame(raf);
+  (window as any).__lenis = lenis;
+
+  // Scroll-velocity skew on tagged elements (marquees)
+  const skewEls = document.querySelectorAll<HTMLElement>('[data-velocity]');
+  if (skewEls.length) {
+    lenis.on('scroll', ({ velocity }: { velocity: number }) => {
+      const sk = Math.max(-2.4, Math.min(2.4, velocity * 0.06));
+      skewEls.forEach((el) => el.style.setProperty('--skew', `${sk}deg`));
+    });
+  }
   // In-page anchor links route through Lenis
   document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
@@ -278,8 +288,39 @@ function initProgress() {
   window.addEventListener('resize', update);
 }
 
+// ---- Pinned scrollytelling (Your first visit) ----
+function initScrollytell() {
+  const sec = document.querySelector<HTMLElement>('[data-pin]');
+  if (!sec) return;
+  const steps = Array.from(sec.querySelectorAll<HTMLElement>('[data-pin-step]'));
+  const dots = Array.from(sec.querySelectorAll<HTMLElement>('[data-pin-dot]'));
+  const fill = sec.querySelector<HTMLElement>('[data-pin-fill]');
+  const n = steps.length;
+  if (!n) return;
+  const desktop = () => window.matchMedia('(min-width: 768px)').matches;
+  const update = () => {
+    if (!desktop()) {
+      steps.forEach((s) => s.classList.add('is-active'));
+      dots.forEach((d) => d.classList.add('is-active'));
+      if (fill) fill.style.transform = 'scaleY(1)';
+      return;
+    }
+    const r = sec.getBoundingClientRect();
+    const total = sec.offsetHeight - window.innerHeight;
+    const prog = total > 0 ? Math.min(Math.max(-r.top / total, 0), 1) : 0;
+    const idx = Math.min(Math.floor(prog * n * 0.999), n - 1);
+    steps.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+    if (fill) fill.style.transform = `scaleY(${prog})`;
+  };
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+}
+
 function init() {
   initSmoothScroll();
+  initScrollytell();
   initReveal();
   initMagnetic();
   initRipple();

@@ -4,9 +4,10 @@ import ServiceIcon from '../components/ServiceIcon.astro';
 import ReviewCard from '../components/ReviewCard.astro';
 import Marquee from '../components/Marquee.astro';
 import BadgeMarquee from '../components/BadgeMarquee.astro';
+import HeroCanvas from '../components/HeroCanvas.astro';
+import FirstVisit from '../components/FirstVisit.astro';
 import {
-  site, services, conditions, team, reviews, reviewDisclaimer,
-  stats, processSteps,
+  site, services, conditions, team, reviews, reviewDisclaimer, stats,
 } from '../data/site';
 
 const vincent = team[0];
@@ -26,6 +27,7 @@ const description =
       <div class="blob blob-sage blob-a" style="width:46rem;height:46rem;top:-16rem;right:-12rem;" data-depth="46"></div>
       <div class="blob blob-soft blob-b" style="width:34rem;height:34rem;bottom:-18rem;left:-12rem;" data-depth="34"></div>
     </div>
+    <HeroCanvas />
     <svg class="absolute top-20 -right-20 w-[55rem] max-w-[80vw] text-sage opacity-10 pointer-events-none z-[1]" viewBox="0 0 600 600" fill="none" aria-hidden="true">
       <path d="M-20 480 C200 280 300 540 640 160" stroke="currentColor" stroke-width="64" stroke-linecap="round" pathLength="1" class="draw-path"/>
     </svg>
@@ -270,24 +272,8 @@ const description =
     </div>
   </section>
 
-  <!-- ============ 9. PROCESS ============ -->
-  <section class="bg-cream section">
-    <div class="container-page">
-      <div class="max-w-2xl mb-12 reveal">
-        <p class="eyebrow text-forest mb-3">What to expect</p>
-        <h2 class="font-display font-extrabold text-forest text-4xl md:text-5xl">From <span class="accent">first call to recovery</span>, in four steps.</h2>
-      </div>
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {processSteps.map((step) => (
-          <div class="card card-hover p-7 reveal" data-tilt>
-            <p class="font-display font-extrabold text-sage text-6xl leading-none tnum">{step.n}</p>
-            <h3 class="mt-4 font-display font-bold text-xl text-forest">{step.title}</h3>
-            <p class="mt-2 text-sm text-charcoal/70">{step.body}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+  <!-- ============ 9. PROCESS (pinned scrollytelling) ============ -->
+  <FirstVisit />
 
   <!-- ============ 10. CONDITIONS ============ -->
   <section class="bg-ivory section">
