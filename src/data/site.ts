@@ -13,7 +13,7 @@ export const site = {
     'Founder-led physiotherapy, reformer pilates, dry needling and rehabilitation in West Perth.',
   phoneDisplay: '0450 075 955',
   phoneHref: '+61450075955',
-  email: 'bookings@physiologix.com.au',
+  email: 'myphysiologix@outlook.com',
   abn: '', // set when provided — footer shows it only when non-empty
   booking: 'https://physiologix.cliniko.com/bookings',
   reviewsUrl: 'https://www.google.com/maps/search/physiologix+west+perth',
